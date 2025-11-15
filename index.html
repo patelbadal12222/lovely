@@ -1,208 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Wedding | Chandan & Suhani</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Chandan & Suhani — A Celebration</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: 'Poppins', sans-serif; overflow:hidden; }
+  :root{
+    --accent:#ff9a9e;
+    --accent-2:#ff6f91;
+    --glass: rgba(255,255,255,0.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif}
+  html,body{height:100%;overflow-x:hidden;background:#fff;color:#222}
 
-/*---------------------- ENTER PAGE ----------------------*/
-#enterScreen {
-  position: fixed;
-  inset: 0;
-  background: url('https://raw.githubusercontent.com/patelbadal12222/gift1/main/wedding.png') center/cover no-repeat;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  z-index:999;
-}
-#enterScreen h1 {
-  font-size:3rem;
-  color:#fff;
-  text-shadow:0 0 15px #000;
-  animation:fadeIn 2s ease;
-}
-#enterBtn {
-  margin-top:20px;
-  padding:12px 35px;
-  font-size:1.3rem;
-  border:none;
-  border-radius:50px;
-  cursor:pointer;
-  background:#ff4d79;
-  color:white;
-  animation:fadeIn 3s ease;
-}
+  /* Top menu (hidden until active) */
+  .top-menu{
+    position:fixed;left:0;right:0;top:0;height:72px;
+    display:flex;align-items:center;justify-content:center;gap:18px;
+    background: rgba(255,154,158,0.95);z-index:1500;
+    border-bottom:2px solid #fff;opacity:0;pointer-events:none;transition:0.35s;
+    backdrop-filter: blur(4px);
+  }
+  .top-menu.active{opacity:1;pointer-events:auto}
+  .top-menu button{
+    border:0;padding:10px 18px;border-radius:10px;background:#fff;color:var(--accent-2);
+    font-weight:700;cursor:pointer;transition:0.2s;font-size:1rem;
+  }
+  .top-menu button:hover{background:var(--accent-2);color:#fff}
 
-/* Floating Hearts */
-.heart {
-  position: absolute;
-  color: pink;
-  font-size: 25px;
-  animation: floatUp 5s linear infinite;
-  opacity:0.8;
-}
-@keyframes floatUp {
-  0% { transform: translateY(0) scale(1); opacity:1; }
-  100% { transform: translateY(-150vh) scale(1.5); opacity:0; }
-}
+  /* each full screen section */
+  section.section{
+    width:100vw;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:40px;
+    position:relative;
+  }
+  h1,h2{font-family:'Great Vibes',cursive}
+  h1{font-size:3.6rem;color:#fff;text-shadow:0 6px 18px rgba(0,0,0,0.45)}
+  h2{font-size:3rem;margin-bottom:12px}
+  p.lead{max-width:900px;font-size:1.15rem;line-height:1.6;color:inherit;margin-top:8px}
 
-@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+  /* Landing / Enter */
+  #landing{background:url('https://raw.githubusercontent.com/patelbadal12222/gift1/main/god.png') center/cover no-repeat;color:#fff;position:relative;overflow:hidden}
+  #enterBtn{margin-top:20px;padding:14px 36px;border-radius:12px;border:0;background:#fff;color:var(--accent-2);font-weight:700;font-size:1.05rem;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.25)}
+  /* Hearts */
+  .hearts{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .heart{position:absolute;width:18px;height:18px;background:var(--accent-2);transform:rotate(-45deg);opacity:0.9;border-radius:3px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.25))}
+  .heart:before,.heart:after{content:'';position:absolute;width:18px;height:18px;background:var(--accent-2);border-radius:50%}
+  .heart:before{top:-9px;left:0}
+  .heart:after{left:9px;top:0}
+  @keyframes floatUp{0%{transform:translateY(0) rotate(-45deg);opacity:1}100%{transform:translateY(-900px) rotate(-45deg);opacity:0}}
 
-/*---------------------- NAVBAR ----------------------*/
-nav {
-  position:fixed;
-  top:0; left:0; width:100%;
-  padding:12px 20px;
-  background:rgba(0,0,0,0.5);
-  backdrop-filter:blur(6px);
-  display:flex;
-  justify-content:center;
-  gap:35px;
-  z-index:900;
-  opacity:0;
-  transition:0.5s;
-}
-nav a {
-  color:white;
-  text-decoration:none;
-  font-size:1.3rem;
-  font-weight:600;
-}
+  /* Home */
+  #home{background:url('https://raw.githubusercontent.com/patelbadal12222/gift1/main/wedding.png') center/cover no-repeat;color:#fff}
+  .home-title{font-size:2.8rem;margin-bottom:6px}
+  .home-sub{font-size:1.15rem;max-width:900px;text-shadow:0 6px 18px rgba(0,0,0,0.45)}
 
-/*---------------------- SECTIONS ----------------------*/
-section {
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  font-size:2rem;
-  color:white;
-  transition:opacity 1s;
-}
-#home { background:#222; }
-#story { background:#333; }
-#gallery { background:#111; }
-#wishes {
-  background:url('https://raw.githubusercontent.com/patelbadal12222/gift1/main/Wishes.jpeg') center/cover no-repeat;
-}
-#wishes p {
-  max-width:700px;
-  font-size:1.5rem;
-  background:rgba(0,0,0,0.5);
-  padding:20px;
-  border-radius:15px;
-}
+  /* Our Story - anime background */
+  #story{background:url('https://raw.githubusercontent.com/patelbadal12222/gift1/main/ANIMEMATION.avif') center/cover no-repeat;color:#fff}
+  #story .overlay{background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.25));position:absolute;inset:0;pointer-events:none}
 
-/*---------------------- FULLSCREEN GALLERY SLIDER ----------------------*/
-.slider {
-  position:relative;
-  width:100%; height:100%; overflow:hidden;
-}
-.slide {
-  position:absolute;
-  inset:0;
-  background-size:cover;
-  background-position:center;
-  opacity:0;
-  transition:opacity 1s;
-}
-.slide.active { opacity:1; }
+  /* Gallery slider */
+  #gallery{background:linear-gradient(180deg,#fff,#fff)}
+  #slider-container{position:relative;width:100%;height:75vh;max-width:1100px;display:flex;align-items:center;justify-content:center;overflow:hidden;margin:0 auto;border-radius:14px}
+  #slider-image{max-width:100%;max-height:100%;border-radius:12px;transition:opacity .45s ease; box-shadow: 0 12px 40px rgba(0,0,0,0.15)}
+  .slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,154,158,0.8);border:0;padding:12px 18px;border-radius:10px;color:#fff;font-size:1.6rem;cursor:pointer}
+  .slider-btn:hover{background:var(--accent-2)}
+  .prev{left:18px}.next{right:18px}
+  .dots{position:relative;display:flex;gap:8px;margin-top:18px;justify-content:center}
+  .dot{width:10px;height:10px;border-radius:999px;background:#ddd;cursor:pointer}
+  .dot.active{background:var(--accent-2)}
 
+  /* Wishes section with background image (paragraph only) */
+  #wishes{background:url('https://raw.githubusercontent.com/patelbadal12222/gift1/main/Wishes.jpeg') center/cover no-repeat;color:#fff}
+  #wishes .wish-wrap{background: rgba(0,0,0,0.35); padding:28px;border-radius:12px;max-width:900px}
+
+  /* Responsive */
+  @media (max-width:900px){
+    h1{font-size:2.6rem}
+    .top-menu button{padding:8px 14px;font-size:.95rem}
+    #slider-container{height:58vh}
+  }
 </style>
 </head>
 <body>
 
-<!-- ENTER SCREEN -->
-<div id="enterScreen">
-  <h1>💐 Congratulations 💐</h1>
-  <button id="enterBtn">Enter</button>
-</div>
+  <!-- Top menu (hidden until Enter) -->
+  <nav class="top-menu" id="topMenu">
+    <button onclick="showSection('home')">Home</button>
+    <button onclick="showSection('story')">Story</button>
+    <button onclick="showSection('gallery')">Gallery</button>
+    <button onclick="showSection('wishes')">Wishes</button>
+  </nav>
 
-<!-- NAVBAR -->
-<nav id="navbar">
-  <a href="#home">💍 👰 🤵 Home</a>
-  <a href="#story">✨ 🌙 ⭐ Story</a>
-  <a href="#gallery">📸 💫 Gallery</a>
-  <a href="#wishes">💐 💞 🌸 Wishes</a>
-</nav>
+  <!-- Landing / Enter -->
+  <section id="landing" class="section">
+    <div class="hearts" id="hearts"></div>
 
-<!-- SECTIONS -->
-<section id="home">Welcome to the Celebration 💖</section>
+    <h1>Congratulations<br>Chandan & Lovely!</h1>
+    <p class="lead" style="max-width:760px">💖 30th December 2025 — A day of love and new beginnings. Welcome to our celebration page.</p>
+    <button id="enterBtn" onclick="enterSite()">Enter</button>
+  </section>
 
-<section id="story">Our Beautiful Journey ✨</section>
+  <!-- Home (full screen) -->
+  <section id="home" class="section" style="display:none">
+    <div class="home-title">Our Wedding Celebration</div>
+    <p class="home-sub">Welcome to the beautiful celebration of Chandan & Suhani! We are thrilled to share this special day with our beloved friends and family. Let's celebrate love, laughter, and memories together.</p>
+  </section>
 
-<section id="gallery">
-  <div class="slider" id="slider">
-    <div class="slide active" style="background-image:url('https://picsum.photos/1080/1920?1');"></div>
-    <div class="slide" style="background-image:url('https://picsum.photos/1080/1920?2');"></div>
-    <div class="slide" style="background-image:url('https://picsum.photos/1080/1920?3');"></div>
-  </div>
-</section>
+  <!-- Our Story (anime bg) -->
+  <section id="story" class="section" style="display:none">
+    <div class="overlay"></div>
+    <h2>Our Story</h2>
+    <p class="lead">From the first meeting to this magical day, Chandan & Suhani’s journey has been filled with love, hope and beautiful memories.</p>
+  </section>
 
-<section id="wishes">
-  <p>
-    Dear Couple, ❤️<br><br>
-    May your life be filled with endless love, joy, happiness, and blessings.
-    Wishing you both a lifetime of togetherness. 💐💞
-  </p>
-</section>
+  <!-- Gallery (full screen slider) -->
+  <section id="gallery" class="section" style="display:none">
+    <h2>Gallery</h2>
+    <div id="slider-container" aria-live="polite">
+      <button class="slider-btn prev" id="prevBtn" aria-label="Previous">&#10094;</button>
+      <img id="slider-image" src="https://raw.githubusercontent.com/patelbadal12222/gift1/main/WhatsApp%20Image%202025-11-14%20at%207.04.58%20PM.jpeg" alt="gallery image">
+      <button class="slider-btn next" id="nextBtn" aria-label="Next">&#10095;</button>
+    </div>
+    <div class="dots" id="dots" aria-hidden="false"></div>
+  </section>
+
+  <!-- Wishes (paragraph only, last) -->
+  <section id="wishes" class="section" style="display:none">
+    <div class="wish-wrap">
+      <h2>Wishes</h2>
+      <p class="lead">May your journey together be filled with endless love, happiness, and blessings. Wishing Chandan & Suhani a lifetime of togetherness, joy, and beautiful memories.</p>
+    </div>
+  </section>
 
 <script>
-/*---------------------- ENTER BUTTON ----------------------*/
-const enterBtn = document.getElementById("enterBtn");
-const enterScreen = document.getElementById("enterScreen");
-const navbar = document.getElementById("navbar");
-
-enterBtn.onclick = () => {
-  enterScreen.style.opacity = "0";
-  setTimeout(() => (enterScreen.style.display = "none"), 600);
-  navbar.style.opacity = "1";
-};
-
-/*---------------------- FLOATING HEARTS ----------------------*/
+/* ---------- Landing hearts ---------- */
+const heartsContainer = document.getElementById('hearts');
 function createHeart(){
-  const heart = document.createElement('div');
-  heart.className = 'heart';
-  heart.innerText = '❤';
-  heart.style.left = Math.random()*100 + 'vw';
-  heart.style.animationDuration = (4 + Math.random()*3) + 's';
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),7000);
+  const el = document.createElement('div');
+  el.className = 'heart';
+  const size = 10 + Math.random()*28;
+  el.style.width = size+'px';
+  el.style.height = size+'px';
+  el.style.left = Math.random()*100 + '%';
+  el.style.bottom = '-40px';
+  el.style.opacity = 0.9;
+  el.style.animation = 'floatUp ' + (4 + Math.random()*6) + 's linear';
+  heartsContainer.appendChild(el);
+  setTimeout(()=> el.remove(), 12000);
 }
-setInterval(createHeart, 400);
+let heartTimer = setInterval(createHeart, 300);
 
-/*---------------------- GALLERY SLIDER ----------------------*/
-let index = 0;
-const slides = document.querySelectorAll('.slide');
-
-function showSlide(i){
-  slides.forEach(s => s.classList.remove('active'));
-  slides[i].classList.add('active');
+/* ---------- Enter site ---------- */
+function enterSite(){
+  clearInterval(heartTimer);
+  // hide landing
+  document.getElementById('landing').style.display = 'none';
+  // show home and top menu
+  document.getElementById('home').style.display = 'flex';
+  document.getElementById('topMenu').classList.add('active');
+  // ensure top of page
+  window.scrollTo({top:0,left:0,behavior:'instant'});
 }
 
-function nextSlide(){ index = (index+1)%slides.length; showSlide(index); }
-function prevSlide(){ index = (index-1+slides.length)%slides.length; showSlide(index); }
+/* ---------- Section navigation ---------- */
+function showSection(id){
+  ['home','story','gallery','wishes'].forEach(s=>{
+    document.getElementById(s).style.display = (s===id)?'flex':'none';
+  });
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
 
-/* Keyboard */
-document.addEventListener('keydown', e => {
-  if(e.key === 'ArrowRight') nextSlide();
-  if(e.key === 'ArrowLeft') prevSlide();
+/* ---------- Gallery slider data ---------- */
+const sliderImages = [
+  "https://raw.githubusercontent.com/patelbadal12222/gift1/main/WhatsApp%20Image%202025-11-14%20at%207.04.58%20PM.jpeg",
+  "https://raw.githubusercontent.com/patelbadal12222/gift1/main/B.jpeg",
+  "https://raw.githubusercontent.com/patelbadal12222/gift1/main/C.jpeg",
+  "https://raw.githubusercontent.com/patelbadal12222/gift1/main/D.jpeg",
+  "https://raw.githubusercontent.com/patelbadal12222/gift1/main/E.jpeg",
+  "https://raw.githubusercontent.com/patelbadal12222/gift1/main/F.jpeg"
+];
+let currentIndex = 0;
+const sliderImage = document.getElementById('slider-image');
+const dots = document.getElementById('dots');
+
+/* build dots */
+function buildDots(){
+  dots.innerHTML = '';
+  sliderImages.forEach((_,i)=>{
+    const d = document.createElement('div');
+    d.className='dot'+(i===0?' active':'');
+    d.dataset.index = i;
+    d.addEventListener('click',()=>{goTo(i)});
+    dots.appendChild(d);
+  });
+}
+buildDots();
+
+/* show image with fade */
+function showImage(index){
+  if(index<0 || index>=sliderImages.length) return;
+  currentIndex = index;
+  Array.from(dots.children).forEach((c,idx)=>c.className = (idx===index)?'dot active':'dot');
+  sliderImage.style.opacity = 0;
+  setTimeout(()=>{ sliderImage.src = sliderImages[index]; sliderImage.style.opacity = 1; }, 220);
+}
+
+/* navigation */
+function nextImage(){ showImage((currentIndex+1)%sliderImages.length); }
+function prevImage(){ showImage((currentIndex-1+sliderImages.length)%sliderImages.length); }
+function goTo(i){ showImage(i); }
+
+/* attach buttons (defer if not present) */
+document.addEventListener('DOMContentLoaded', ()=>{
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  if(nextBtn) nextBtn.addEventListener('click', nextImage);
+  if(prevBtn) prevBtn.addEventListener('click', prevImage);
+  // preload first
+  sliderImage.src = sliderImages[0];
 });
 
-/* Mobile Swipe */
-let startX = 0;
-slider.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-slider.addEventListener('touchend', e => {
-  let endX = e.changedTouches[0].clientX;
-  if(startX - endX > 50) nextSlide();
-  if(endX - startX > 50) prevSlide();
+/* keyboard support */
+document.addEventListener('keydown', (e)=>{
+  const galleryVisible = document.getElementById('gallery').style.display === 'flex';
+  if(!galleryVisible) return;
+  if(e.key === 'ArrowRight') nextImage();
+  if(e.key === 'ArrowLeft') prevImage();
 });
+
+/* touch / swipe support */
+(function enableSwipe(){
+  const container = document.getElementById('slider-container');
+  if(!container) return;
+  let startX = 0;
+  container.addEventListener('touchstart', (e)=> startX = e.changedTouches[0].screenX);
+  container.addEventListener('touchend', (e)=>{
+    const endX = e.changedTouches[0].screenX;
+    if(endX < startX - 50) nextImage();
+    if(endX > startX + 50) prevImage();
+  });
+})();
+
+/* small helper (if you want to auto-play later) */
+// let autoTimer = setInterval(nextImage, 5000);
 </script>
 </body>
 </html>
