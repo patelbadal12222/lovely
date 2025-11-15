@@ -1,216 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Chandan & Suhani — A Celebration</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --peach:#ffe6d5;
-      --gold:#ffd36b;
-      --accent:#b86b3a;
-      --text:#3b2f2f;
-      --card-bg: rgba(255,255,255,0.9);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:linear-gradient(135deg,var(--peach) 0%, var(--gold) 100%);color:var(--text);scroll-behavior:smooth}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chandan & Suhani Wedding Wishes</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+  html, body { height:100%; overflow:hidden; }
 
-    /* full-page sections with snap scrolling */
-    main{height:100vh;overflow-y:hidden}
-    section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px;position:relative;opacity:0;transition:opacity 2s ease;}
-    section.active{opacity:1}
+  /* Top menu */
+  .top-menu {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background: rgba(255,154,158,0.95);
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    padding:15px 0;
+    z-index:1000;
+    border-bottom:2px solid #fff;
+    opacity:0;
+    pointer-events:none;
+    transition:0.5s;
+  }
+  .top-menu.active {
+    opacity:1;
+    pointer-events:auto;
+  }
+  .top-menu button {
+    border:none;
+    padding:10px 20px;
+    border-radius:10px;
+    background:#fff;
+    color:#ff6f91;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+  }
+  .top-menu button:hover { background:#ff6f91; color:white; }
 
-    /* wallpaper subtle texture */
-    body::before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 10% 20%, rgba(255,255,255,0.06), transparent 10%), radial-gradient(circle at 80% 80%, rgba(0,0,0,0.03), transparent 12%);pointer-events:none;mix-blend-mode:overlay}
+  /* Full-page sections */
+  .section {
+    width:100vw;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:50px 20px;
+    position:relative;
+  }
 
-    .card{width:1000px;max-width:92vw;background:var(--card-bg);border-radius:24px;padding:36px;box-shadow:0 18px 50px rgba(0,0,0,0.08);text-align:center}
-    h1{font-family:'Great Vibes',cursive;font-size:56px;margin:6px 0;color:var(--accent);text-shadow:0 6px 18px rgba(184,107,58,0.12)}
-    h2{font-size:20px;margin:8px 0;color:rgba(59,47,47,0.9)}
-    .lead{font-size:18px;line-height:1.9;color:#3b2f2f;margin-top:18px;opacity:0;transition:opacity 1.8s ease}
-    .lead.visible{opacity:1}
+  /* Landing */
+  #landing { 
+    background: url('https://raw.githubusercontent.com/patelbadal12222/gift1/main/god.png') no-repeat center center;
+    background-size: cover;
+    color:white; 
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+  }
+  #landing h1 { font-family:'Great Vibes',cursive; font-size:3rem; margin-bottom:10px; }
+  #landing p { font-size:1.2rem; margin-bottom:30px; }
+  #landing button { padding:15px 30px; font-size:1.2rem; border:none; border-radius:10px; background:#fff; color:#ff6f91; cursor:pointer; font-weight:bold; }
 
-    /* typing + fade */
-    .typing{display:inline-block;white-space:pre-wrap}
-    .cursor{display:inline-block;margin-left:6px;opacity:1;animation:blink 1s steps(2) infinite}
-    @keyframes blink{50%{opacity:0}}
+  /* Home / Wedding Celebration with background image */
+  #home {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 50px 20px;
+    background-image: url('https://raw.githubusercontent.com/patelbadal12222/gift1/main/wedding.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+  }
 
-    /* glowing emoji */
-    .emoji{font-size:36px;display:inline-block;transform:translateY(0);animation:float 3s ease-in-out infinite}
-    .emoji.glow{filter:drop-shadow(0 0 12px rgba(255,212,123,0.85))}
-    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)} }
+  .section h2 { font-family:'Great Vibes',cursive; font-size:2.5rem; margin-bottom:20px; }
+  .section p { max-width:700px; margin:auto; font-size:1.1rem; line-height:1.6; }
 
-    /* hearts */
-    .hearts{position:fixed;inset:0;pointer-events:none;z-index:0}
-    .heart{position:absolute;width:22px;height:22px;background:var(--accent);transform:rotate(45deg);opacity:0.9;border-radius:3px}
-    .heart::before,.heart::after{content:"";position:absolute;width:22px;height:22px;background:var(--accent);border-radius:50%}
-    .heart::before{top:-11px;left:0}
-    .heart::after{left:-11px;top:0}
+  .wishes-box { max-width:400px; margin:20px auto; display:flex; flex-direction:column; gap:10px; }
+  .wishes-box input, .wishes-box textarea { padding:10px; border-radius:10px; border:1px solid #ddd; font-size:1rem; width:100%; }
+  .wishes-box button { padding:10px; border:none; border-radius:10px; background:#ff9a9e; color:white; font-size:1rem; cursor:pointer; }
 
-    /* navigation */
-    nav{position:fixed;right:20px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:5}
-    nav a{background:rgba(255,255,255,0.9);padding:10px 12px;border-radius:12px;text-decoration:none;color:var(--accent);font-weight:700;box-shadow:0 8px 18px rgba(0,0,0,0.06)}
+  .messages { max-width:600px; margin:20px auto; text-align:left; }
+  .message { background:#ffe6f0; padding:10px 15px; border-radius:10px; margin-bottom:10px; }
 
-    /* responsive */
-    @media (max-width:720px){ h1{font-size:38px} .card{padding:22px} nav{right:10px} .lead{font-size:16px} }
-  </style>
+  /* Full screen slider */
+  #slider-container {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+  #slider-image {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 15px;
+    transition: opacity 0.5s ease;
+  }
+  .slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,154,158,0.7);
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    border-radius: 10px;
+    user-select: none;
+  }
+  .slider-btn:hover { background: rgba(255,154,158,1); }
+  .prev { left: 20px; }
+  .next { right: 20px; }
+
+  /* Floating hearts */
+  .heart { position:absolute; width:20px; height:20px; background:red; transform:rotate(-45deg); animation: float 6s linear infinite; opacity:0.8; }
+  .heart:before, .heart:after { content:""; position:absolute; width:20px; height:20px; background:red; border-radius:50%; }
+  .heart:before { top:-10px; left:0; }
+  .heart:after { left:10px; top:0; }
+  @keyframes float { 0% { transform: translateY(0) rotate(-45deg); opacity:0.8; } 100% { transform: translateY(-800px) rotate(-45deg); opacity:0; } }
+
+</style>
 </head>
 <body>
-  <div class="hearts" id="hearts"></div>
-  <nav>
-    <a href="#home">🏠 Home</a>
-    <a href="#story">📖 Our Story</a>
-    <a href="#wishes">💌 Wishes</a>
-  </nav>
 
-  <!-- Hidden autoplaying music -->
-  <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/01/audio_76b234b730.mp3?filename=romantic-piano-ambient-11156.mp3" type="audio/mpeg">
-  </audio>
+<div class="top-menu" id="topMenu">
+  <button onclick="showSection('home')">Home</button>
+  <button onclick="showSection('story')">Our Story</button>
+  <button onclick="showSection('gallery')">Gallery</button>
+  <button onclick="showSection('wishes')">Wishes</button>
+</div>
 
-  <main id="main">
-    <!-- Home -->
-    <section id="home">
-      <div class="card">
-        <h1 class="emoji glow">💍 Congratulations, Chandan & Suhani! 💖</h1>
-        <h2>Wishing you a lifetime of love and golden memories ✨</h2>
-        <p class="lead" id="homeLead"><span class="typing" id="homeTyping"></span><span class="cursor" id="homeCursor">▍</span></p>
-      </div>
-    </section>
+<!-- Landing -->
+<section class="section" id="landing">
+  <h1>Congratulations Chandan & Suhani!</h1>
+  <p>💖 15th November 2025 💖</p>
+  <button onclick="enterSite()">Enter</button>
+  <div id="hearts"></div>
+</section>
 
-    <!-- Our Story -->
-    <section id="story">
-      <div class="card">
-        <h1 class="emoji">📖 Our Story</h1>
-        <h2 class="emoji glow">Where two hearts became one</h2>
-        <p class="lead" id="storyLead"><span class="typing" id="storyTyping"></span><span class="cursor" id="storyCursor">▍</span></p>
-      </div>
-    </section>
+<!-- Home / Wedding Celebration -->
+<section class="section" id="home">
+  <h2>Our Wedding Celebration</h2>
+  <p>Welcome to the beautiful celebration of Chandan & Suhani! We are thrilled to share this special day with our beloved friends and family. Let's celebrate love, laughter, and memories together!</p>
+</section>
 
-    <!-- Wishes -->
-    <section id="wishes">
-      <div class="card">
-        <h1 class="emoji glow">💌 Wishes & Blessings</h1>
-        <h2>Messages for the newlyweds</h2>
-        <p class="lead" id="wishesLead"><span class="typing" id="wishesTyping"></span><span class="cursor" id="wishesCursor">▍</span></p>
-      </div>
-    </section>
-  </main>
+<!-- Our Story -->
+<section class="section" id="story" style="display:none;">
+  <h2>Our Story</h2>
+  <p>From the first meeting to this magical day, Chandan & Suhani have shared countless moments, smiles, and dreams. Their journey of love has been inspiring, and today we join in wishing them a lifetime of happiness and togetherness.</p>
+</section>
 
-  <script>
-    // Text content
-    const texts = {
-      home: `Welcome to this special page where we celebrate the beautiful union of Chandan & Suhani. Today is a day of joy, promises, and new beginnings — may your life together be filled with laughter, understanding, and endless warmth. Every sunrise bring you closer; every night wrap you in comfort. Congratulations on finding your forever. ✨`,
-      story: `Once upon a gentle turn of fate, two souls found each other amid life's everyday bustle. Their smiles discovered common ground, their dreams began to stitch together, and each shared moment became a thread in a tapestry of trust and tenderness. As Chandan and Suhani step forward hand-in-hand, their past becomes a cherished memory and their future a warmly lit path. May they continue to grow, to support, and to delight in the ordinary wonders of life together. 💕`,
-      wishes: `To the newlyweds: may your home be a haven of love, your conversations a source of laughter, and your challenges mere stepping stones to greater understanding. May your days be generous and your nights restful; may you dance through life with compassion, patience, and joy. Sending all our love and blessings as you begin this golden journey together. 🥂`
-    };
+<!-- Gallery -->
+<section class="section" id="gallery" style="display:none;">
+  <h2>Gallery</h2>
+  <div id="slider-container">
+    <img id="slider-image" src="https://raw.githubusercontent.com/patelbadal12222/gift1/main/WhatsApp%20Image%202025-11-14%20at%207.04.58%20PM.jpeg" />
+    <button class="slider-btn prev" onclick="prevImage()">&#10094;</button>
+    <button class="slider-btn next" onclick="nextImage()">&#10095;</button>
+  </div>
+</section>
 
-    // typing + fade helper
-    function typeWithFade(textEl, leadEl, cursorEl, text, speed=28, onComplete=null){
-      textEl.textContent = '';
-      leadEl.classList.remove('visible');
-      cursorEl.style.opacity = '1';
-      let i=0;
-      function step(){
-        if(i<text.length){
-          textEl.textContent += text.charAt(i);
-          i++;
-          // gradually show lead container as typing reaches 10% to create combined fade
-          if(i>Math.floor(text.length*0.08)){
-            leadEl.classList.add('visible');
-          }
-          setTimeout(step, speed);
-        }else{
-          cursorEl.style.opacity = '0';
-          if(onComplete) onComplete();
-        }
-      }
-      step();
-    }
+<!-- Wishes -->
+<section class="section" id="wishes" style="display:none;">
+  <h2>Wishes</h2>
+  <p>Leave your blessings for Chandan & Suhani!</p>
+  <div class="wishes-box">
+    <input type="text" id="name" placeholder="Your Name" />
+    <textarea id="message" rows="3" placeholder="Your Message"></textarea>
+    <button onclick="addWish()">Send</button>
+  </div>
+  <div class="messages" id="messages"></div>
+</section>
 
-    // manage sections and auto-scroll loop
-    const sections = ['home','story','wishes'];
-    let currentIndex = 0;
-    const intervalMs = 10000; // 10 seconds per the user's choice
-    const transitionMs = 2000; // 2 second fade
-    const mainEl = document.getElementById('main');
+<script>
+  // Floating hearts
+  const heartsContainer = document.getElementById('hearts');
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.animationDuration = 4 + Math.random() * 4 + 's';
+    heartsContainer.appendChild(heart);
+    setTimeout(() => heartsContainer.removeChild(heart), 6000);
+  }
+  setInterval(createHeart, 300);
 
-    // set initial active section
-    function showSection(idx){
-      document.querySelectorAll('main section').forEach((sec,i)=>{
-        if(i===idx) sec.classList.add('active'); else sec.classList.remove('active');
-      });
-    }
+  // Enter site
+  function enterSite() {
+    document.getElementById('landing').style.display='none';
+    document.getElementById('home').style.display='flex';
+    document.getElementById('topMenu').classList.add('active');
+  }
 
-    // start typing for a section if not yet typed or always restart? We will restart typing each time to match fade-in
-    function playSection(idx){
-      const id = sections[idx];
-      const typingEl = document.getElementById(id + 'Typing');
-      const leadEl = document.getElementById(id + 'Lead');
-      const cursorEl = document.getElementById(id + 'Cursor');
-      typeWithFade(typingEl, leadEl, cursorEl, texts[id], 28);
-    }
-
-    // smooth scroll simulation: we still use scrollIntoView to center, but main overflow hidden prevents scrollbars
-    function gotoIndex(idx){
-      currentIndex = idx % sections.length;
-      // visually activate section (fade handled by CSS)
-      showSection(currentIndex);
-      // optional: center using window.scrollTo to top of section's offset
-      const sectionEl = document.getElementById(sections[currentIndex]);
-      sectionEl.scrollIntoView({behavior:'smooth', block:'center'});
-      // start typing for this section
-      playSection(currentIndex);
-    }
-
-    // auto-loop
-    function startLoop(){
-      gotoIndex(0);
-      setInterval(()=>{
-        currentIndex = (currentIndex + 1) % sections.length;
-        gotoIndex(currentIndex);
-      }, intervalMs);
-    }
-
-    // typing elements exist per section
-    window.addEventListener('load', ()=>{
-      // make first section active and type immediately
-      gotoIndex(0);
-      // start auto loop after slight delay so first typing begins
-      setTimeout(()=> startLoop(), 1200);
-
-      // start music immediately (may be blocked by some browsers) but we attempt to play
-      const music = document.getElementById('bgMusic');
-      try{ music.volume = 0.22; music.play().catch(()=>{/* autoplay blocked by browser */}); }catch(e){/* ignore */}
+  // Show a section
+  function showSection(id) {
+    ['home','story','gallery','wishes'].forEach(sec=>{
+      document.getElementById(sec).style.display = (sec===id)?'flex':'none';
     });
+  }
 
-    // floating hearts generator
-    const hearts = document.getElementById('hearts');
-    function createHeart(){
-      const h = document.createElement('div');
-      h.className = 'heart';
-      const size = 8 + Math.random()*28;
-      h.style.width = size+'px'; h.style.height = size+'px';
-      h.style.left = Math.random()*100+'vw'; h.style.top = Math.random()*100+'vh';
-      h.style.opacity = (0.35 + Math.random()*0.6);
-      const dur = 4000 + Math.random()*7000;
-      hearts.appendChild(h);
-      requestAnimationFrame(()=>{ h.style.transition = `transform ${dur}ms linear, opacity ${dur}ms linear`; h.style.transform = `translateY(-120vh) rotate(45deg)`; h.style.opacity = '0'; });
-      setTimeout(()=>h.remove(), dur+200);
-    }
-    setInterval(createHeart, 350);
+  // Add wishes
+  function addWish() {
+    const name = document.getElementById('name').value;
+    const msg = document.getElementById('message').value;
+    if(!name || !msg) return;
+    const messagesDiv = document.getElementById('messages');
+    const div = document.createElement('div');
+    div.className = 'message';
+    div.innerHTML = `<strong>${name}:</strong> ${msg}`;
+    messagesDiv.appendChild(div);
+    document.getElementById('name').value='';
+    document.getElementById('message').value='';
+  }
 
-    // nav links let user jump but loop continues no matter what
-    document.querySelectorAll('nav a').forEach((a, i)=>{
-      a.addEventListener('click', (e)=>{
-        e.preventDefault();
-        gotoIndex(i);
-      });
-    });
+  // Slider functionality
+  const sliderImages = [
+    "https://raw.githubusercontent.com/patelbadal12222/gift1/main/WhatsApp%20Image%202025-11-14%20at%207.04.58%20PM.jpeg",
+    "https://raw.githubusercontent.com/patelbadal12222/gift1/main/B.jpeg",
+    "https://raw.githubusercontent.com/patelbadal12222/gift1/main/C.jpeg",
+    "https://raw.githubusercontent.com/patelbadal12222/gift1/main/D.jpeg",
+    "https://raw.githubusercontent.com/patelbadal12222/gift1/main/E.jpeg",
+    "https://raw.githubusercontent.com/patelbadal12222/gift1/main/F.jpeg"
+  ];
+  let currentIndex = 0;
+  const sliderImage = document.getElementById('slider-image');
 
-    // keep loop running even if user scrolls or interacts; we don't pause or clear intervals
-    // small accessibility: if user attempts to scroll (wheel/touch), we allow it but auto-loop keeps firing
-    // note: some browsers block autoplay with sound — clicking the page will usually start playback.
-  </script>
+  function showImage(index) {
+    sliderImage.style.opacity = 0;
+    setTimeout(() => {
+      sliderImage.src = sliderImages[index];
+      sliderImage.style.opacity = 1;
+    }, 300);
+  }
+
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % sliderImages.length;
+    showImage(currentIndex);
+  }
+
+  function prevImage() {
+    currentIndex = (currentIndex - 1 + sliderImages.length) % sliderImages.length;
+    showImage(currentIndex);
+  }
+
+  // Keyboard arrows
+  document.addEventListener('keydown', function(e) {
+    if(document.getElementById('gallery').style.display !== 'flex') return;
+    if(e.key === 'ArrowRight') nextImage();
+    if(e.key === 'ArrowLeft') prevImage();
+  });
+
+  // Swipe support for mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const sliderContainer = document.getElementById('slider-container');
+  sliderContainer.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+  sliderContainer.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    if(touchEndX < touchStartX - 50) nextImage();
+    if(touchEndX > touchStartX + 50) prevImage();
+  });
+</script>
+
 </body>
 </html>
+
