@@ -64,17 +64,14 @@ p.lead{max-width:900px;font-size:1.15rem;line-height:1.6;color:inherit;margin-to
 }
 
 /* Landing */
-#landing {
-  background: url('https://raw.githubusercontent.com/patelbadal12222/gift1/main/god.png') no-repeat center top;
-  background-size: contain; /* ensure full Ganesh image fits */
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-}
+#landing{background:url('https://raw.githubusercontent.com/patelbadal12222/gift1/main/god.png') center/cover no-repeat;color:#fff;position:relative;overflow:hidden}
 #enterBtn{margin-top:20px;padding:14px 36px;border-radius:12px;border:0;background:#fff;color:var(--accent-2);font-weight:700;font-size:1.05rem;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.25)}
 
 .emoji{position:absolute;pointer-events:none;user-select:none;}
 @keyframes floatEmoji{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(-900px) rotate(360deg);opacity:0}}
+
+/* Landing floating emoji container */
+#landingEmojis{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
 
 /* Home */
 #home{background:url('https://raw.githubusercontent.com/patelbadal12222/gift1/main/wedding.png') center/cover no-repeat;color:#fff}
@@ -114,6 +111,7 @@ p.lead{max-width:900px;font-size:1.15rem;line-height:1.6;color:inherit;margin-to
 </head>
 <body>
 
+<!-- Top Menu -->
 <nav class="top-menu" id="topMenu">
   <button onclick="showSection('home')">Home</button>
   <button onclick="showSection('story')">Story</button>
@@ -121,20 +119,24 @@ p.lead{max-width:900px;font-size:1.15rem;line-height:1.6;color:inherit;margin-to
   <button onclick="showSection('wishes')">Wishes</button>
 </nav>
 
+<!-- Landing -->
 <section id="landing" class="section">
   <canvas id="fireworkCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50;"></canvas>
+  <div id="landingEmojis"></div>
   <h1>Congratulations<br>Chandan & Suhani!</h1>
   <div id="countdown"></div>
   <p class="lead">💖 30th November 2025 — A day of love and new beginnings. Welcome to our celebration page.</p>
   <button id="enterBtn" onclick="enterSite()">Enter</button>
 </section>
 
+<!-- Home -->
 <section id="home" class="section" style="display:none">
   <div id="homeEmojis"></div>
   <div class="home-title">Our Wedding Celebration</div>
   <p class="home-sub">Welcome to the beautiful celebration of Chandan & Suhani! Let's celebrate love, laughter, and memories together.</p>
 </section>
 
+<!-- Our Story -->
 <section id="story" class="section" style="display:none">
   <div class="overlay"></div>
   <div id="storyEmojis"></div>
@@ -142,6 +144,7 @@ p.lead{max-width:900px;font-size:1.15rem;line-height:1.6;color:inherit;margin-to
   <p class="lead">From the first meeting to this magical day, Chandan & Suhani’s journey has been filled with love, hope and beautiful memories.</p>
 </section>
 
+<!-- Gallery -->
 <section id="gallery" class="section" style="display:none">
   <div id="galleryEmojis"></div>
   <h2>Gallery</h2>
@@ -153,6 +156,7 @@ p.lead{max-width:900px;font-size:1.15rem;line-height:1.6;color:inherit;margin-to
   <div class="dots" id="dots"></div>
 </section>
 
+<!-- Wishes -->
 <section id="wishes" class="section" style="display:none">
   <div id="wishesEmojis"></div>
   <div class="wish-wrap">
@@ -162,7 +166,7 @@ p.lead{max-width:900px;font-size:1.15rem;line-height:1.6;color:inherit;margin-to
 </section>
 
 <script>
-// Fireworks
+/* ---------- Fireworks ---------- */
 const canvas = document.getElementById('fireworkCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -173,7 +177,25 @@ function animate(){ctx.clearRect(0,0,canvas.width,canvas.height); for(let i=fire
 animate(); setInterval(launchFirework,800);
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
 
-// Countdown
+/* ---------- Landing floating emojis ---------- */
+function startLandingEmojis(){
+  const container = document.getElementById('landingEmojis');
+  const emojis = ['✨','🌟','💫','💥'];
+  setInterval(()=>{
+    const el = document.createElement('div');
+    el.className = 'emoji';
+    el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    el.style.left = Math.random()*100 + '%';
+    el.style.bottom = '-40px';
+    el.style.fontSize = (18 + Math.random()*18) + 'px';
+    el.style.animation = 'floatEmoji ' + (4 + Math.random()*6) + 's linear';
+    container.appendChild(el);
+    setTimeout(()=> el.remove(), 12000);
+  }, 300);
+}
+startLandingEmojis();
+
+/* ---------- Countdown ---------- */
 function startCountdown(){
   const countdownEl = document.getElementById('countdown');
   const target = new Date('2025-11-30T00:00:00');
@@ -192,20 +214,26 @@ function startCountdown(){
 }
 startCountdown();
 
-// Enter site
-function enterSite(){ document.getElementById('landing').style.display='none'; document.getElementById('home').style.display='flex'; document.getElementById('topMenu').classList.add('active'); }
+/* ---------- Enter site ---------- */
+function enterSite(){ 
+  document.getElementById('landing').style.display='none'; 
+  document.getElementById('home').style.display='flex'; 
+  document.getElementById('topMenu').classList.add('active'); 
+}
 
-// Section nav
-function showSection(id){ ['home','story','gallery','wishes'].forEach(s=>document.getElementById(s).style.display=(s===id)?'flex':'none'); }
+/* ---------- Section nav ---------- */
+function showSection(id){ 
+  ['home','story','gallery','wishes'].forEach(s=>document.getElementById(s).style.display=(s===id)?'flex':'none'); 
+}
 
-// Floating emojis
+/* ---------- Floating emojis ---------- */
 function startFloatingEmojis(containerId, emojiList, interval=400){
   const container = document.getElementById(containerId);
   if(!container) return;
   setInterval(()=>{
     const el=document.createElement('div');
     el.className='emoji';
-    el.textContent=emojiList[Math.floor(Math.random()*emojiList.length)];
+    el.textContent = emojiList[Math.floor(Math.random()*emojiList.length)];
     el.style.left=Math.random()*100+'%';
     el.style.bottom='-40px';
     el.style.fontSize=(18+Math.random()*18)+'px';
@@ -219,7 +247,7 @@ startFloatingEmojis('storyEmojis',['💑','🌸','📖'],500);
 startFloatingEmojis('galleryEmojis',['📸','🎈','💐'],450);
 startFloatingEmojis('wishesEmojis',['🕊️','🎁','❤️'],400);
 
-// Gallery slider
+/* ---------- Gallery slider ---------- */
 const sliderImages = [
   "https://raw.githubusercontent.com/patelbadal12222/gift1/main/WhatsApp%20Image%202025-11-14%20at%207.04.58%20PM.jpeg",
   "https://raw.githubusercontent.com/patelbadal12222/gift1/main/B.jpeg",
