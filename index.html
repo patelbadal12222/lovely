@@ -43,6 +43,9 @@
   /* Landing / Enter */
   #landing{background:url('https://raw.githubusercontent.com/patelbadal12222/gift1/main/god.png') center/cover no-repeat;color:#fff;position:relative;overflow:hidden}
   #enterBtn{margin-top:20px;padding:14px 36px;border-radius:12px;border:0;background:#fff;color:var(--accent-2);font-weight:700;font-size:1.05rem;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.25)}
+  /* Countdown */
+  #countdown{margin-top:12px;font-size:1.2rem;font-weight:600;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.45)}
+
   /* Hearts */
   .hearts{position:absolute;inset:0;pointer-events:none;overflow:hidden}
   .heart{position:absolute;width:18px;height:18px;background:var(--accent-2);transform:rotate(-45deg);opacity:0.9;border-radius:3px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.25))}
@@ -80,59 +83,60 @@
     h1{font-size:2.6rem}
     .top-menu button{padding:8px 14px;font-size:.95rem}
     #slider-container{height:58vh}
+    #countdown{font-size:1rem}
   }
 </style>
 </head>
 <body>
 
-  <!-- Top menu (hidden until Enter) -->
-  <nav class="top-menu" id="topMenu">
-    <button onclick="showSection('home')">Home</button>
-    <button onclick="showSection('story')">Story</button>
-    <button onclick="showSection('gallery')">Gallery</button>
-    <button onclick="showSection('wishes')">Wishes</button>
-  </nav>
+<!-- Top menu (hidden until Enter) -->
+<nav class="top-menu" id="topMenu">
+  <button onclick="showSection('home')">Home</button>
+  <button onclick="showSection('story')">Story</button>
+  <button onclick="showSection('gallery')">Gallery</button>
+  <button onclick="showSection('wishes')">Wishes</button>
+</nav>
 
-  <!-- Landing / Enter -->
-  <section id="landing" class="section">
-    <div class="hearts" id="hearts"></div>
+<!-- Landing / Enter -->
+<section id="landing" class="section">
+  <div class="hearts" id="hearts"></div>
+  <h1>Chandan ♥ Suhani</h1>
+  <p class="lead" style="max-width:760px">💖 30th November 2025 — A day of love and new beginnings. Welcome to our celebration page.</p>
+  <div id="countdown"></div>
+  <button id="enterBtn" onclick="enterSite()">Enter</button>
+</section>
 
-    <h1>Congratulations<br>Chandan & Lovely!</h1>
-    <p class="lead" style="max-width:760px">💖 30th November 2025 — A day of love and new beginnings. Welcome to our celebration page.</p>
-    <button id="enterBtn" onclick="enterSite()">Enter</button>
-  </section>
+<!-- Home (full screen) -->
+<section id="home" class="section" style="display:none">
+  <div class="home-title">Our Wedding Celebration</div>
+  <p class="home-sub">Welcome to the beautiful celebration! We are thrilled to share this special day with our beloved friends and family. Let's celebrate love, laughter, and memories together.</p>
+</section>
 
-  <!-- Home (full screen) -->
-  <section id="home" class="section" style="display:none">
-    <div class="home-title">Our Wedding Celebration</div>
-    <p class="home-sub">Welcome to the beautiful celebration of Chandan & Suhani! We are thrilled to share this special day with our beloved friends and family. Let's celebrate love, laughter, and memories together.</p>
-  </section>
+<!-- Our Story (anime bg) -->
+<section id="story" class="section" style="display:none">
+  <div class="overlay"></div>
+  <h2>Our Story</h2>
+  <p class="lead">From the first meeting to this magical day, their journey has been filled with love, hope and beautiful memories.</p>
+</section>
 
-  <!-- Our Story (anime bg) -->
-  <section id="story" class="section" style="display:none">
-    <div class="overlay"></div>
-    <h2>Our Story</h2>
-    <p class="lead">From the first meeting to this magical day, Chandan & Suhani’s journey has been filled with love, hope and beautiful memories.</p>
-  </section>
+<!-- Gallery (full screen slider) -->
+<section id="gallery" class="section" style="display:none">
+  <h2>Gallery</h2>
+  <div id="slider-container" aria-live="polite">
+    <button class="slider-btn prev" id="prevBtn" aria-label="Previous">&#10094;</button>
+    <img id="slider-image" src="https://raw.githubusercontent.com/patelbadal12222/gift1/main/WhatsApp%20Image%202025-11-14%20at%207.04.58%20PM.jpeg" alt="gallery image">
+    <button class="slider-btn next" id="nextBtn" aria-label="Next">&#10095;</button>
+  </div>
+  <div class="dots" id="dots" aria-hidden="false"></div>
+</section>
 
-  <!-- Gallery (full screen slider) -->
-  <section id="gallery" class="section" style="display:none">
-    <h2>Gallery</h2>
-    <div id="slider-container" aria-live="polite">
-      <button class="slider-btn prev" id="prevBtn" aria-label="Previous">&#10094;</button>
-      <img id="slider-image" src="https://raw.githubusercontent.com/patelbadal12222/gift1/main/WhatsApp%20Image%202025-11-14%20at%207.04.58%20PM.jpeg" alt="gallery image">
-      <button class="slider-btn next" id="nextBtn" aria-label="Next">&#10095;</button>
-    </div>
-    <div class="dots" id="dots" aria-hidden="false"></div>
-  </section>
-
-  <!-- Wishes (paragraph only, last) -->
-  <section id="wishes" class="section" style="display:none">
-    <div class="wish-wrap">
-      <h2>Wishes</h2>
-      <p class="lead">May your journey together be filled with endless love, happiness, and blessings. Wishing Chandan & Suhani a lifetime of togetherness, joy, and beautiful memories.</p>
-    </div>
-  </section>
+<!-- Wishes (paragraph only, last) -->
+<section id="wishes" class="section" style="display:none">
+  <div class="wish-wrap">
+    <h2>Wishes</h2>
+    <p class="lead">May your journey together be filled with endless love, happiness, and blessings. Wishing them a lifetime of togetherness, joy, and beautiful memories.</p>
+  </div>
+</section>
 
 <script>
 /* ---------- Landing hearts ---------- */
@@ -152,15 +156,31 @@ function createHeart(){
 }
 let heartTimer = setInterval(createHeart, 300);
 
+/* ---------- Countdown timer ---------- */
+const countdownEl = document.getElementById('countdown');
+const weddingDate = new Date("2025-11-30T00:00:00");
+function updateCountdown(){
+  const now = new Date();
+  const diff = weddingDate - now;
+  if(diff <= 0){
+    countdownEl.innerHTML = "The day has arrived!";
+    return;
+  }
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff / (1000*60*60)) % 24);
+  const minutes = Math.floor((diff / (1000*60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+  countdownEl.innerHTML = `Countdown: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
 /* ---------- Enter site ---------- */
 function enterSite(){
   clearInterval(heartTimer);
-  // hide landing
   document.getElementById('landing').style.display = 'none';
-  // show home and top menu
   document.getElementById('home').style.display = 'flex';
   document.getElementById('topMenu').classList.add('active');
-  // ensure top of page
   window.scrollTo({top:0,left:0,behavior:'instant'});
 }
 
@@ -172,7 +192,7 @@ function showSection(id){
   document.getElementById(id).scrollIntoView({behavior:'smooth'});
 }
 
-/* ---------- Gallery slider data ---------- */
+/* ---------- Gallery slider ---------- */
 const sliderImages = [
   "https://raw.githubusercontent.com/patelbadal12222/gift1/main/WhatsApp%20Image%202025-11-14%20at%207.04.58%20PM.jpeg",
   "https://raw.githubusercontent.com/patelbadal12222/gift1/main/B.jpeg",
@@ -185,7 +205,6 @@ let currentIndex = 0;
 const sliderImage = document.getElementById('slider-image');
 const dots = document.getElementById('dots');
 
-/* build dots */
 function buildDots(){
   dots.innerHTML = '';
   sliderImages.forEach((_,i)=>{
@@ -198,7 +217,6 @@ function buildDots(){
 }
 buildDots();
 
-/* show image with fade */
 function showImage(index){
   if(index<0 || index>=sliderImages.length) return;
   currentIndex = index;
@@ -207,22 +225,18 @@ function showImage(index){
   setTimeout(()=>{ sliderImage.src = sliderImages[index]; sliderImage.style.opacity = 1; }, 220);
 }
 
-/* navigation */
 function nextImage(){ showImage((currentIndex+1)%sliderImages.length); }
 function prevImage(){ showImage((currentIndex-1+sliderImages.length)%sliderImages.length); }
 function goTo(i){ showImage(i); }
 
-/* attach buttons (defer if not present) */
 document.addEventListener('DOMContentLoaded', ()=>{
   const nextBtn = document.getElementById('nextBtn');
   const prevBtn = document.getElementById('prevBtn');
   if(nextBtn) nextBtn.addEventListener('click', nextImage);
   if(prevBtn) prevBtn.addEventListener('click', prevImage);
-  // preload first
   sliderImage.src = sliderImages[0];
 });
 
-/* keyboard support */
 document.addEventListener('keydown', (e)=>{
   const galleryVisible = document.getElementById('gallery').style.display === 'flex';
   if(!galleryVisible) return;
@@ -230,7 +244,6 @@ document.addEventListener('keydown', (e)=>{
   if(e.key === 'ArrowLeft') prevImage();
 });
 
-/* touch / swipe support */
 (function enableSwipe(){
   const container = document.getElementById('slider-container');
   if(!container) return;
@@ -242,10 +255,6 @@ document.addEventListener('keydown', (e)=>{
     if(endX > startX + 50) prevImage();
   });
 })();
-
-/* small helper (if you want to auto-play later) */
-// let autoTimer = setInterval(nextImage, 5000);
 </script>
 </body>
 </html>
-
